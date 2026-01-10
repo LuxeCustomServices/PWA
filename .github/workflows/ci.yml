@@ -1,58 +1,58 @@
 name: CI
 
 on:
-    push:
-        branches: [main, master]
-    pull_request:
-        branches: [main, master]
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 jobs:
-    build-and-smoke:
-        runs-on: ubuntu-latest
+  build-and-smoke:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "18"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
 
-            - name: Cache client node_modules
-              uses: actions/cache@v4
-              with:
-                  path: public/client/node_modules
-                  key: ${{ runner.os }}-client-${{ hashFiles('public/client/package-lock.json') }}
+      - name: Cache client node_modules
+        uses: actions/cache@v4
+        with:
+          path: public/client/node_modules
+          key: ${{ runner.os }}-client-${{ hashFiles('public/client/package-lock.json') }}
 
-            - name: Install client deps
-              working-directory: public/client
-              run: npm ci
+      - name: Install client deps
+        working-directory: public/client
+        run: npm ci
 
-            - name: Build client
-              working-directory: public/client
-              run: npm run build
+      - name: Build client
+        working-directory: public/client
+        run: npm run build
 
-            - name: Cache root node_modules
-              uses: actions/cache@v4
-              with:
-                  path: node_modules
-                  key: ${{ runner.os }}-root-${{ hashFiles('package-lock.json') }}
+      - name: Cache root node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-root-${{ hashFiles('package-lock.json') }}
 
-            - name: Install root deps
-              run: npm ci
+      - name: Install root deps
+        run: npm ci
 
-            - name: Start server (background)
-              run: |
-                  node server.js &
-                  sleep 2
+      - name: Start server (background)
+        run: |
+          node server.js &
+          sleep 2
 
-            - name: Smoke test - root
-              run: |
-                  curl --fail http://localhost:3000/
+      - name: Smoke test - root
+        run: |
+          curl --fail http://localhost:3000/
 
-            - name: Upload client build artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: client-build
-                  path: public/client/build
+      - name: Upload client build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: client-build
+          path: public/client/build

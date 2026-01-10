@@ -15,297 +15,185 @@ function Dashboard() {
     }
   }, []);
 
-  const handleUpgrade = () => navigate('/payments');
+  const quickActions = [
+    {
+      icon: '📄',
+      title: 'Create Invoice',
+      desc: 'Send professional invoices',
+      action: () => navigate('/invoices'),
+      color: '#4facfe'
+    },
+    {
+      icon: '💼',
+      title: 'New Quote',
+      desc: 'Estimate project costs',
+      action: () => navigate('/quotes'),
+      color: '#667eea'
+    },
+    {
+      icon: '💳',
+      title: 'Get Paid',
+      desc: 'Process payments',
+      action: () => navigate('/payments'),
+      color: '#28a745'
+    },
+    {
+      icon: '⚡',
+      title: 'Upgrade',
+      desc: 'Unlock all features',
+      action: () => navigate('/payments'),
+      color: '#ffc107'
+    }
+  ];
+
+  if (!user) {
+    return (
+      <div className="slide-in-up" style={{ textAlign: 'center', padding: '60px 20px' }}>
+        <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <div className="card-header">
+            <div className="card-icon">🚀</div>
+            <h1 className="card-title">Welcome to BIZZY</h1>
+          </div>
+          <p style={{ fontSize: '18px', color: '#666', marginBottom: '30px' }}>
+            The easiest way to create professional invoices and get paid faster.
+          </p>
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button 
+              onClick={() => navigate('/signup')} 
+              className="btn btn-primary btn-large"
+            >
+              🎯 Get Started Free
+            </button>
+            <button 
+              onClick={() => navigate('/login')} 
+              className="btn" 
+              style={{ background: 'transparent', color: '#667eea', border: '2px solid #667eea' }}
+            >
+              👋 Sign In
+            </button>
+          </div>
+          <p style={{ marginTop: '20px', color: '#999', fontSize: '14px' }}>
+            ✨ No credit card required • 🆓 3 free invoices • ⚡ Setup in 2 minutes
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="dashboard">
-      <div className="container">
-        {user ? (
-          <div className="fade-in-up">
-            <div className="welcome-header">
-              <h1>Welcome back, {user.name || user.email.split('@')[0]}! 👋</h1>
-              <p>Ready to create some amazing invoices?</p>
-            </div>
-
-            <div className="upgrade-banner card">
-              <div className="upgrade-content">
-                <div className="upgrade-text">
-                  <h3>🚀 Unlock Your Business Potential</h3>
-                  <p>Create unlimited invoices, accept payments, and grow faster with BIZZY Pro.</p>
-                </div>
-                <button onClick={handleUpgrade} className="btn btn-primary">
-                  Upgrade to Pro - Only $19/mo
-                </button>
-              </div>
-            </div>
-
-            <div className="dashboard-grid">
-              <div className="quick-actions card">
-                <h3>Quick Actions</h3>
-                <div className="action-buttons">
-                  <button 
-                    onClick={() => navigate('/invoices')} 
-                    className="action-btn btn btn-success"
-                  >
-                    📄 Create Invoice
-                  </button>
-                  <button 
-                    onClick={() => navigate('/quotes')} 
-                    className="action-btn btn btn-primary"
-                  >
-                    💼 New Quote
-                  </button>
-                  <button 
-                    onClick={() => navigate('/payments')} 
-                    className="action-btn btn btn-outline"
-                  >
-                    ⚡ Upgrade Plan
-                  </button>
-                </div>
-              </div>
-
-              <div className="stats-card card">
-                <h3>This Month</h3>
-                <div className="stats-grid">
-                  <div className="stat-item">
-                    <div className="stat-number">0</div>
-                    <div className="stat-label">Invoices Sent</div>
-                  </div>
-                  <div className="stat-item">
-                    <div className="stat-number">$0</div>
-                    <div className="stat-label">Revenue</div>
-                  </div>
-                  <div className="stat-item">
-                    <div className="stat-number">$0</div>
-                    <div className="stat-label">Pending</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="recent-activity card">
-                <h3>Recent Activity</h3>
-                <div className="activity-list">
-                  <div className="activity-item">
-                    <div className="activity-icon">🎉</div>
-                    <div className="activity-text">
-                      <strong>Welcome to BIZZY!</strong>
-                      <p>Your account has been created successfully.</p>
-                    </div>
-                  </div>
-                  <div className="activity-item">
-                    <div className="activity-icon">💡</div>
-                    <div className="activity-text">
-                      <strong>Pro Tip</strong>
-                      <p>Create your first invoice to start getting paid faster.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div className="slide-in-up">
+      {/* Welcome Header */}
+      <div className="card" style={{ textAlign: 'center', marginBottom: '30px' }}>
+        <div className="card-header" style={{ justifyContent: 'center', border: 'none' }}>
+          <div className="card-icon">👋</div>
+          <div>
+            <h1 className="card-title">Welcome back, {user.name || user.email.split('@')[0]}!</h1>
+            <p style={{ color: '#666', margin: '5px 0 0 0' }}>Ready to create some amazing invoices?</p>
           </div>
-        ) : (
-          <div className="welcome-guest fade-in-up">
-            <div className="guest-content">
-              <h1>Start Your Business Journey</h1>
-              <p>Join thousands of entrepreneurs using BIZZY to get paid faster.</p>
-              <button 
-                onClick={() => navigate('/signup')} 
-                className="btn btn-primary btn-large"
-              >
-                Get Started Free
-              </button>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
 
-      <style jsx>{`
-        .dashboard {
-          min-height: calc(100vh - 70px);
-          padding: 40px 20px;
-        }
+      {/* Quick Actions */}
+      <div className="quick-actions">
+        {quickActions.map((action, index) => (
+          <div 
+            key={index}
+            className="quick-action"
+            onClick={action.action}
+            style={{ cursor: 'pointer' }}
+          >
+            <span className="quick-action-icon">{action.icon}</span>
+            <div className="quick-action-title">{action.title}</div>
+            <div className="quick-action-desc">{action.desc}</div>
+          </div>
+        ))}
+      </div>
 
-        .container {
-          max-width: 1200px;
-          margin: 0 auto;
-        }
+      {/* Upgrade Banner */}
+      <div className="card" style={{ 
+        background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', 
+        color: 'white',
+        textAlign: 'center'
+      }}>
+        <div className="card-header" style={{ justifyContent: 'center', border: 'none' }}>
+          <div className="card-icon" style={{ background: 'rgba(255,255,255,0.2)' }}>🚀</div>
+          <div>
+            <h3 style={{ color: 'white', margin: '0 0 10px 0' }}>Unlock Your Business Potential</h3>
+            <p style={{ margin: '0', opacity: 0.9 }}>
+              Create unlimited invoices, accept payments, and grow faster with BIZZY Pro.
+            </p>
+          </div>
+        </div>
+        <button 
+          onClick={() => navigate('/payments')} 
+          className="btn"
+          style={{ 
+            background: 'white', 
+            color: '#4facfe', 
+            fontWeight: 'bold',
+            boxShadow: '0 4px 15px rgba(255,255,255,0.3)'
+          }}
+        >
+          💎 Upgrade to Pro - Only $19/mo
+        </button>
+      </div>
 
-        .welcome-header {
-          text-align: center;
-          margin-bottom: 40px;
-        }
+      {/* Stats Grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+        {/* Quick Stats */}
+        <div className="card">
+          <div className="card-header">
+            <div className="card-icon">📊</div>
+            <h3 className="card-title">This Month</h3>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '15px', textAlign: 'center' }}>
+            <div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea' }}>0</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>Invoices</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#28a745' }}>$0</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>Revenue</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ffc107' }}>$0</div>
+              <div style={{ fontSize: '12px', color: '#666' }}>Pending</div>
+            </div>
+          </div>
+        </div>
 
-        .welcome-header h1 {
-          font-size: 2.5rem;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 12px;
-        }
+        {/* Recent Activity */}
+        <div className="card">
+          <div className="card-header">
+            <div className="card-icon">🎯</div>
+            <h3 className="card-title">Getting Started</h3>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '10px', background: '#f8f9fa', borderRadius: '10px' }}>
+              <span style={{ fontSize: '20px' }}>🎉</span>
+              <div>
+                <div style={{ fontWeight: '600', fontSize: '14px' }}>Welcome to BIZZY!</div>
+                <div style={{ fontSize: '12px', color: '#666' }}>Your account is ready to go</div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '10px', background: '#f8f9fa', borderRadius: '10px' }}>
+              <span style={{ fontSize: '20px' }}>💡</span>
+              <div>
+                <div style={{ fontWeight: '600', fontSize: '14px' }}>Pro Tip</div>
+                <div style={{ fontSize: '12px', color: '#666' }}>Create your first invoice to get started</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        .welcome-header p {
-          font-size: 1.2rem;
-          color: rgba(255, 255, 255, 0.8);
-        }
-
-        .upgrade-banner {
-          margin-bottom: 40px;
-          background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-          color: white;
-          border: none;
-        }
-
-        .upgrade-content {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 20px;
-        }
-
-        .upgrade-text h3 {
-          font-size: 1.5rem;
-          margin-bottom: 8px;
-        }
-
-        .upgrade-text p {
-          opacity: 0.9;
-        }
-
-        .dashboard-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 30px;
-        }
-
-        .quick-actions h3,
-        .stats-card h3,
-        .recent-activity h3 {
-          margin-bottom: 24px;
-          color: #333;
-          font-weight: 600;
-        }
-
-        .action-buttons {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .action-btn {
-          width: 100%;
-          text-align: left;
-          padding: 16px 20px;
-          font-size: 1rem;
-        }
-
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-        }
-
-        .stat-item {
-          text-align: center;
-          padding: 20px;
-          background: rgba(102, 126, 234, 0.1);
-          border-radius: 12px;
-        }
-
-        .stat-number {
-          font-size: 2rem;
-          font-weight: 700;
-          color: #667eea;
-          margin-bottom: 8px;
-        }
-
-        .stat-label {
-          color: #666;
-          font-size: 0.9rem;
-        }
-
-        .activity-list {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        }
-
-        .activity-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 16px;
-          padding: 16px;
-          background: rgba(102, 126, 234, 0.05);
-          border-radius: 12px;
-        }
-
-        .activity-icon {
-          font-size: 1.5rem;
-          flex-shrink: 0;
-        }
-
-        .activity-text strong {
-          display: block;
-          color: #333;
-          margin-bottom: 4px;
-        }
-
-        .activity-text p {
-          color: #666;
-          font-size: 0.9rem;
-          margin: 0;
-        }
-
-        .welcome-guest {
-          text-align: center;
-          padding: 100px 20px;
-        }
-
-        .guest-content h1 {
-          font-size: 3rem;
-          font-weight: 700;
-          color: white;
-          margin-bottom: 20px;
-        }
-
-        .guest-content p {
-          font-size: 1.3rem;
-          color: rgba(255, 255, 255, 0.8);
-          margin-bottom: 40px;
-        }
-
-        .btn-outline {
-          background: transparent;
-          color: #667eea;
-          border: 2px solid #667eea;
-        }
-
-        .btn-outline:hover {
-          background: #667eea;
-          color: white;
-        }
-
-        @media (max-width: 768px) {
-          .upgrade-content {
-            flex-direction: column;
-            text-align: center;
-          }
-
-          .dashboard-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .stats-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .welcome-header h1 {
-            font-size: 2rem;
-          }
-
-          .guest-content h1 {
-            font-size: 2.5rem;
-          }
-        }
-      `}</style>
+      {/* Navigation Tabs */}
+      <div className="nav-tabs" style={{ marginTop: '30px' }}>
+        <a href="/invoices" className="nav-tab">📄 Invoices</a>
+        <a href="/quotes" className="nav-tab">💼 Quotes</a>
+        <a href="/payments" className="nav-tab">💳 Payments</a>
+        <a href="/schedule" className="nav-tab">📅 Schedule</a>
+      </div>
     </div>
   );
 }
