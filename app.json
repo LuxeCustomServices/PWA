@@ -1,0 +1,30 @@
+{
+  "name": "BIZZY Invoicing App",
+  "description": "Professional invoicing PWA for entrepreneurs",
+  "repository": "https://github.com/yourusername/bizzy-invoicing",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "react", "invoicing", "stripe"],
+  "env": {
+    "STRIPE_SECRET_KEY": {
+      "description": "Your Stripe secret key from dashboard.stripe.com",
+      "required": true
+    },
+    "STRIPE_PUBLISHABLE_KEY": {
+      "description": "Your Stripe publishable key from dashboard.stripe.com",
+      "required": true
+    },
+    "STRIPE_WEBHOOK_SECRET": {
+      "description": "Your Stripe webhook secret",
+      "required": false
+    },
+    "JWT_SECRET": {
+      "description": "A random string for JWT tokens",
+      "generator": "secret"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
