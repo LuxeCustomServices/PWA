@@ -6,4 +6,4 @@ This is a minimal privacy policy template for the BIZZY invoicing app. Replace p
 - Purpose: to provide invoicing services, process payments, and communicate account-related messages.
 - Third parties: Stripe for payment processing; analytics providers if configured.
 - Data retention: retained as necessary to provide service and comply with law.
-- Contact: replace-with-your-contact@example.com
+- Contact: <bdecreations25@gmail.com>>
